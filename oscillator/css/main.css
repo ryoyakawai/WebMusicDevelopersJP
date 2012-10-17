@@ -1,0 +1,63 @@
+.canvasKenban{
+               margin           : 10px;
+               width            : 630px;
+               height           : 120px;
+               background-color : #903;
+               border-style     : solid;
+               }
+
+.ctrlPanel{
+            margin : 10px;
+            width  : 630px;
+            height : 170px;
+           }
+
+.gainLabel{
+          width: 60px;
+          margin: 0px 0px 10px 0px;
+          font-weight: bold; 
+          font-size: 16px;
+          border-style: solid;
+          border-width: 1px;
+        }
+
+.gainMin{
+          position: relative;
+          margin: 0px 0px 0px 10px;
+          float: left;
+        }
+
+.gain{
+       position: relative;
+       margin: 0px 0px 0px 8px;
+       width: 300px;
+       float: left;
+      }
+
+
+.gainMax{
+          position: relative;
+          margin: 0px 0px 0px 8px;
+          float: left;
+        }
+
+.oscLabel{
+          width: 120px;
+          margin-top: 20px;
+          font-weight: bold; 
+          font-size: 16px;
+          border-style: solid;
+          border-width: 1px;
+        }
+
+.oscType{
+         margin: 10px 15px 0px 25px;
+        }
+
+.oscImage{
+           margin: 0px 10px 10px 0px;
+         }
+
+.oscOff{
+       opacity: 0.2;
+      }

@@ -1,0 +1,38 @@
+<html>
+		<head>
+				<meta charset="UTF-8">
+				<title>Oscillator Sample | WebAudioAPI</title>
+				<link type="text/css" rel="stylesheet" href="css/main.css" >
+		</head>
+		<body>
+
+      <h2>Oscillator Sample</h2>
+      <div class="ctrlPanel">
+
+        <div class="gainLabel">Volume</div>
+        <div class="gainMin">Min</div>
+        <input class="gain" type="range" min="0" max="1" step="0.02" value="0.3">
+        <div class="gainMax">Max</div>
+        <br style="clear:left;">
+
+        <div class="oscLabel">Oscillator Type</div>
+        <div class="oscType">
+          <img src="images/sine.png" class="oscImage" id="sine">
+          <img src="images/square.png" class="oscImage oscOff" id="square">
+          <img src="images/sawtooth.png" class="oscImage oscOff" id="sawtooth">
+          <img src="images/triangle.png" class="oscImage oscOff" id="triangle">
+        </div>
+
+      </div>
+
+      <div class="canvasKenban">
+        <canvas id="canvasKenban" width="650" height="122"></canvas>
+      </div>
+
+		  <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		  <script type="text/javascript" src="js/webAudio.js"></script>
+		  <script type="text/javascript" src="js/main.js"></script>
+		  <script type="text/javascript" src="js/canvasKenban.js"></script>
+		</body>
+</html>
+
