@@ -1,6 +1,6 @@
 # サンプルコード：Web Music Developers JP
 
-GoogleGroups の [Web Music Developers JP](https://groups.google.com/forum/?hl=ja&fromgroups#!forum/web-music-developers-jp) ように作成したリポジトリです。
+GoogleGroups の [Web Music Developers JP](https://groups.google.com/forum/?hl=ja&fromgroups#!forum/web-music-developers-jp) のサンプルコードのリポジトリです。
 
 ## おしながき
 このリポジトリには基本的なコードのサンプルを追加して行く予定でいます。
