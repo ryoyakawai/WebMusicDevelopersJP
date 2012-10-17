@@ -1,6 +1,6 @@
 # Oscillatorのサンプルコード
 
-##　サンプルの説明
+## サンプルの説明
 js/webAudio.js に WebAudioAPIに 関するコードを書きました。
  * audioContext を作成
  * Oscillato(osc) を作成
