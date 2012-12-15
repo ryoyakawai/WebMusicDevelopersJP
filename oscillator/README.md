@@ -20,6 +20,8 @@ js/webAudio.js に WebAudioAPIに 関するコードを書きました。
     osc.connect( audioContext.destination );  
     osc.noteOn(0);  
 
+[WebMIDIAPIShim](https://github.com/cwilso/WebMIDIAPIShim)によるWeb MIDI APIのシミュレーションも実装しています。
+
 ## 気づいた点
 周波数(osc.frequency.value)を変更する度に、audioContext.createOscillator()をする必要がある。  
 これを行わないとポルタメントがかかった音になるので注意してください。
