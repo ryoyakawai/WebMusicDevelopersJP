@@ -1,4 +1,4 @@
-body{ font-family: sans-serif; }
+body{ background-image: url(../images/backGround.png); font-family: sans-serif; }
 h2{ text-decoration:underline; text-shadow: 1px 1px 3px #a9a9a9;  }
 div.midiStatus { float:left; border-radius:7px ;margin: 3px 3px 0px 13px; width:14px; height:14px; background-color:#FF7F7F; border-width:1px; border-style:solid; }
 
