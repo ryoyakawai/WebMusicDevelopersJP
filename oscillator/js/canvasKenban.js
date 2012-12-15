@@ -9,7 +9,7 @@ function canvasKenban(noteOnCallback, noteOffCallback) {
       b_x = w_x+20,
       keyCount = 0,
       widthCount = 0,
-      midiNumber = 72,
+      midiNumber = 60,
       midiNumberStart = midiNumber;
   var kenban = new Array();
   var nowKeyOn = new Array();

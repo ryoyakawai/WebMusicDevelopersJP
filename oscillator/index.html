@@ -1,14 +1,23 @@
 <html>
 		<head>
 				<meta charset="UTF-8">
-				<title>Oscillator Sample | WebAudioAPI</title>
+				<title>Oscillator Sample [WebAudioAPI / WebMIDIAPI] </title>
 				<link type="text/css" rel="stylesheet" href="css/main.css" >
 		</head>
 		<body>
 
-      <h2>Oscillator Sample</h2>
-      <div class="ctrlPanel">
+      <h2>Oscillator Sample [Web Audio API / Web MIDI API]</h2>
 
+						<div class="midiconnect">
+        <div class="midiLabel">MIDI</div>
+								<!--<div class="midiStatus" status="off"></div>-->
+								<div class="left"><input type="button" class="midiStatus" status="off" value="MIDI ON"></div>
+								<div class="connectionstatus"></div>
+								<br style="clear:both;">
+								<div style="width:900px; margin: -14px 0px 0px 10px; font-size: 70%;">このページは<a href="https://github.com/cwilso/WebMIDIAPIShim" target="_blank">WebMIDIShim</a>により<a href="http://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>をシミュレートしておりUSB-MIDIデバイスからの発音が可能です。<br>シミュレートには<a href="http://jazz-soft.net/" target="_blank">Jazz-Soft.netのJazz-Plugin</a>が必要です。お試しの際はインストールをお願いいたします。</div>
+						</div>
+
+      <div class="ctrlPanel">
         <div class="gainLabel">Volume</div>
         <div class="gainMin">Min</div>
         <input class="gain" type="range" min="0" max="1" step="0.02" value="0.3">
@@ -33,6 +42,11 @@
 		  <script type="text/javascript" src="js/webAudio.js"></script>
 		  <script type="text/javascript" src="js/main.js"></script>
 		  <script type="text/javascript" src="js/canvasKenban.js"></script>
+		  <script type="text/javascript" src="js/WebMIDIAPI.js"></script>
+		  <script type="text/javascript" src="js/ctrlWebMIDIAPI.js"></script>
+
+				<div id="MIDIPlugin" style="position:absolute; visibility:hidden"></div>
+
 		</body>
 </html>
 

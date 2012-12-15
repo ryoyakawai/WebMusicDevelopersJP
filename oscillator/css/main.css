@@ -1,3 +1,20 @@
+body{ font-family: sans-serif; }
+h2{ text-decoration:underline; text-shadow: 1px 1px 3px #a9a9a9;  }
+div.midiStatus { float:left; border-radius:7px ;margin: 3px 3px 0px 13px; width:14px; height:14px; background-color:#FF7F7F; border-width:1px; border-style:solid; }
+
+.midiconnect {	margin: 10px 10px 20px 10px; height:80px; }
+.left { float:left; margin: 0px 0px 0px 0px; }
+.connectionstatus { margin: 0px 0px 0px 0px;}
+.midiLabel{
+								  -webkit-box-shadow: 1px 1px 3px #a9a9a9;
+          width: 40px;
+          margin: 0px 0px 10px 0px;
+          font-weight: bold; 
+          font-size: 16px;
+          border-style: solid;
+          border-width: 1px;
+        }
+
 .canvasKenban{
                margin           : 10px;
                width            : 630px;
@@ -7,12 +24,14 @@
                }
 
 .ctrlPanel{
+    								clear:both;
             margin : 10px;
             width  : 630px;
             height : 170px;
            }
 
 .gainLabel{
+								  -webkit-box-shadow: 1px 1px 3px #a9a9a9;
           width: 60px;
           margin: 0px 0px 10px 0px;
           font-weight: bold; 
@@ -42,6 +61,7 @@
         }
 
 .oscLabel{
+								  -webkit-box-shadow: 1px 1px 3px #a9a9a9;
           width: 120px;
           margin-top: 20px;
           font-weight: bold; 

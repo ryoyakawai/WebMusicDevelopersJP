@@ -40,7 +40,30 @@ $(document).ready(function(){
     webAudio.setGainValue( $(this).val() );
   });
 
-
+  // midi
+  changeStatus('<font color="gray">No MIDI device are connected.</font>');
+  $('input.midiStatus').click(function(){
+    switch($(this).attr('status')){
+      case 'off':
+      navigator.requestMIDIAccess( onsuccesscallback, onerrorcallback );
+      break;
+    }
+  });
+  
 });
 
 
+function midiConnected(text) {
+  $('div.midiStatus').attr('status', 'on');
+  $('div.midiStatus').css('background-color', '#7F7FFF');
+  $('input.midiStatus').attr('disabled', 'disabled');
+  changeStatus('Successfully connected to "' + text + '".');
+}
+
+function midiError(){
+  changeStatus('<font color="red">ERROR has been occured during connecting to MIDI device.</font>');
+}
+
+function changeStatus(text){
+  $('div.connectionstatus').html('<div style="position: relative; margin:2px 0px 0px 73px">' + text + '</div>');
+}
