@@ -1,0 +1,14 @@
+{
+  "name": "Web Music Developers JP Sample App",
+  "description": "Sample App",
+  "manifest_version": 2,
+  "version": "0.1",
+  "app": {
+    "background": {
+      "scripts": ["js/background.js"]
+    }
+  },
+  "permissions": [
+		],
+  "icons": { "128": "images/icon-128.png" }
+}
