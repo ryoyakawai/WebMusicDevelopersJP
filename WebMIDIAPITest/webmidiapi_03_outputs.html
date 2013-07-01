@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Web MIDI API Test: outputs()</title>
+    <link rel="author" title="Ryoya KAWAI" href="mailto:ryoya.kawai@gmail.com">
+    <link rel="help" href="http://webaudio.github.io/web-midi-api/#obtaining-access-to-midi-devices">
+    <link rel="help" href="http://webaudio.github.io/web-midi-api/#midiport-interface">
+    <link rel="match" href="reference/REFERENCE-FILE-NAME">
+    <meta name="flags" content="WebMIDIAPI.js">
+    <meta name="assert" content="Return true when test success in outputs().">
+    <script src="resources/testharness.js"></script>
+    <script src="resources/testharnessreport.js"></script>
+    <script src="Uint8Array.js"></script>
+    <script src="WebMIDIAPI.js"></script>
+
+    <style type="text/css">
+    /* ADD STYLE BLOCK HERE (PREFERRABLE TO INLINE STYLES) */
+    </style>
+  </head>
+  <body>
+    <p>Success when obtain OUTPUT MIDI devce list with outputs().</p>
+    <div id="warning" style="color:red;"></div>
+
+    <div id="log"></div>
+
+    <!-- PAGE CONTENT -->
+    <script type="text/javascript">
+    var MIDI;
+    var timerId={ };
+    var getPort={ };
+
+    var test_getOutputs = async_test("getOutputs() - W3C Spec: Web MIDI API");
+
+    navigator.requestMIDIAccess().then( successCallback, errorCallback );
+    function successCallback(access) {
+        MIDI = access;
+        test_getOutputs.step(function() {
+            var outputs=MIDI.outputs();
+            console.log("[OutputDevices] ", outputs);
+            if(outputs.length==0) {
+                document.getElementById("warning").innerHTML="Your Computer looks no <b><u>MIDI OUTPUT</u></b> devices are pluged-in.<br> Please plug-in at least one <b><u>MIDI OUTPUT</u></b> device before run this Test.";
+                assert_false(true);
+                test_getOutputs.done();
+            }
+            assert_true(outputs instanceof Object);
+            for( var j=0; j<outputs.length; j++ ) {
+                assert_true( typeof outputs[j]["id"]=="string", "[Type of \"id\": String] " );
+                assert_true( typeof outputs[j]["manufactuerer"]=="string" || outputs[j]["manufactuerer"]==null, "[Type of \"manufactuerer\": String or null] " );
+                assert_true( typeof outputs[j]["name"]=="string" || outputs[j]["name"]==null, "[Type of \"name\": String or null] " );
+                assert_in_array( outputs[j]["type"], ["input", "output"], "[Type of \"type\": input or output] " );
+                assert_true( typeof outputs[j]["version"]=="string" || outputs[j]["version"]==null, "[Type of \"version\": String or null] " );
+            }
+            test_getOutputs.done();
+        });
+    }
+    function errorCallback(message) {
+        test_getOutputs.step(function() {
+            console.log(message);
+            assert_true(false);
+            test_getOutputs.done();
+        });
+    }
+
+
+    </script>
+  </body>
+</html>

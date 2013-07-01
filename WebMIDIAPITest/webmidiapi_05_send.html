@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Web MIDI API Test: send()</title>
+    <link rel="author" title="Ryoya KAWAI" href="mailto:ryoya.kawai@gmail.com">
+    <link rel="help" href="http://webaudio.github.io/web-midi-api/#obtaining-access-to-midi-devices">
+    <link rel="match" href="reference/REFERENCE-FILE-NAME">
+    <meta name="flags" content="WebMIDIAPI.js">
+    <meta name="assert" content="Success when MIDI messages send to device with send() and MIDI device plays C D E F G A B C in Piano voice.">
+    <script src="resources/testharness.js"></script>
+    <script src="resources/testharnessreport.js"></script>
+    <script src="Uint8Array.js"></script>
+    <script src="WebMIDIAPI.js"></script>
+
+    <style type="text/css">
+    /* ADD STYLE BLOCK HERE (PREFERRABLE TO INLINE STYLES) */
+    </style>
+  </head>
+  <body>
+    <p>Success when MIDI messages send to device with send() and MIDI device plays C D E F G A B C in Piano voice.</p>
+    <div id="selectdevice"></div>
+    <div id="log"></div>
+
+    <!-- PAGE CONTENT -->
+    <!--script type="text/javascript" src="webmidiapi_07_send.js"></script-->
+    <script type="text/javascript">
+    var MIDI;
+    var timerId={ };
+    var getPort={ };
+
+    var test_outputs = async_test(
+        "send() - W3C Spec: Web MIDI API",
+        {timeout: 5000} //msec
+    );
+
+    navigator.requestMIDIAccess().then( successCallback, errorCallback );
+    function successCallback(access) {
+        MIDI = access;
+        test_outputs.step(function() {
+            var outputs=MIDI.outputs();
+            console.log("[OutputDevices] ", outputs);
+            if(outputs.length==0) {
+                document.getElementById("warning").innerHTML="Your Computer looks no <b><u>MIDI OUTPUT</u></b> devices are pluged-in.<br> Please plug-in at least one <b><u>MIDI OUTPUT</u></b> device before run this Test.";
+                assert_false(true);
+                disableButton()
+                test_outputs.done();
+            }
+
+            var input = document.createElement("input");
+            input.type="button"; input.id="start"; input.value="Run";
+            var select = document.createElement("select");
+            select.id="midiout";
+            for(var i=0; i<outputs.length; i++) {
+                select.options[i]=new Option(outputs[i]["name"]+" ("+outputs[i]["id"]+")", i);
+            }
+            document.getElementById("selectdevice").appendChild(select);
+            document.getElementById("selectdevice").appendChild(input);
+
+            document.getElementById("start").addEventListener("click", function(){
+                var selIdx=document.getElementById("midiout").selectedIndex;
+                disableButton()
+
+                var o = outputs[selIdx];
+                console.log(o);
+                assert_true(outputs instanceof Object);
+
+                var count=0, j=0;
+                var msg=[0x3b, 0x3d, 0x3f, 0x40, 0x42, 0x44, 0x46, 0x47];
+                var timerId = setInterval(function(){
+                    j++;
+                    var fst=0x80;
+                    if(j%2==1) {
+                        fst=0x90;
+                    }
+                    var snd=msg[count];
+                    o.send( [ fst, snd, 0x7f ] );
+                    console.log(fst.toString(16), snd.toString(16));
+                    if(j%2==0) count++;
+                    if(msg.length<=count) {
+                        clearInterval(timerId);
+                        assert_true(true);
+                        test_outputs.done();
+                    }}, 70); //default:70
+                    console.log(o);
+                });
+                
+
+
+            });
+        }
+        function errorCallback(message) {
+            test_outputs.step(function() {
+                assert_true(false);
+                disableButton()
+                test_outputs.done();
+            });
+        }
+        function disableButton() {
+            document.getElementById("midiout").setAttribute("disabled", "disabled");
+            document.getElementById("start").setAttribute("disabled", "disabled");
+        }
+    </script>
+
+  </body>
+</html>
