@@ -25,8 +25,7 @@
     <script type="text/javascript">
     var MIDI;
 
-    var test_requestMIDIAccess = async_test("requestMIDIAccess() - W3C Spec: Web MIDI API");
-
+    var test_requestMIDIAccess = async_test("requestMIDIAccess({sysex: flase}) - W3C Spec: Web MIDI API");
     function testWMA() {
         navigator.requestMIDIAccess({sysex:false}).then( successCallback, errorCallback );
         function successCallback(access) {
@@ -43,8 +42,26 @@
             });
         }
     }
-
     testWMA();
+
+    var test_requestMIDIAccess02 = async_test("requestMIDIAccess({sysex: true}) - W3C Spec: Web MIDI API");
+    function testWMA02() {
+        navigator.requestMIDIAccess({sysex:true}).then( successCallback, errorCallback );
+        function successCallback(access) {
+            MIDI=access;
+            test_requestMIDIAccess02.step(function() {
+                assert_true(true);
+            });
+            test_requestMIDIAccess02.done();
+        }
+        function errorCallback() {
+            test_requestMIDIAccess02.step(function() {
+                assert_false(true);
+                test_requestMIDIAccess02.done();
+            });
+        }
+    }
+    testWMA02();
     </script>
 
 

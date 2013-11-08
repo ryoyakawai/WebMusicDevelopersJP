@@ -20,6 +20,7 @@
   <body>
     <p>Success when MIDI messages send to device with send() and MIDI device plays C D E F G A B C in Piano voice.</p>
     <div id="selectdevice"></div>
+    <p>Selected Device: <span id="outputdevice" style="border:1px solid #afafaf; border-radius:4px; padding:2px 4px;"></span></p>
     <div id="log"></div>
 
     <!-- PAGE CONTENT -->
@@ -28,6 +29,7 @@
     var MIDI;
     var timerId={ };
     var getPort={ };
+    var outputs;
 
     var test_outputs = async_test(
         "send() - W3C Spec: Web MIDI API",
@@ -38,7 +40,7 @@
     function successCallback(access) {
         MIDI = access;
         test_outputs.step(function() {
-            var outputs=MIDI.outputs();
+            outputs=MIDI.outputs();
             console.log("[OutputDevices] ", outputs);
             if(outputs.length==0) {
                 document.getElementById("warning").innerHTML="Your Computer looks no <b><u>MIDI OUTPUT</u></b> devices are pluged-in.<br> Please plug-in at least one <b><u>MIDI OUTPUT</u></b> device before run this Test.";
@@ -59,10 +61,11 @@
 
             document.getElementById("start").addEventListener("click", function(){
                 var selIdx=document.getElementById("midiout").selectedIndex;
-                disableButton()
+                //disableButton()
 
                 var o = outputs[selIdx];
                 console.log(o);
+                document.getElementById("outputdevice").innerHTML=outputs[selIdx]["name"]+" ("+outputs[selIdx]["id"]+")";
                 assert_true(outputs instanceof Object);
 
                 var count=0, j=0;
@@ -80,15 +83,25 @@
                     if(msg.length<=count) {
                         clearInterval(timerId);
                         assert_true(true);
+                        disableButton();
                         test_outputs.done();
                     }}, 70); //default:70
                     console.log(o);
-                });
-                
-
-
+                });                
             });
-        }
+
+            // automatic
+            if(typeof outputs=="object" && outputs.length>0) {
+                var type="click";
+                var e=document.createEvent('MouseEvent');
+                var b=document.getElementById("start");
+                e.initEvent(type, true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+                b.dispatchEvent(e);
+            }
+        
+
+ 
+       }
         function errorCallback(message) {
             test_outputs.step(function() {
                 assert_true(false);
@@ -100,6 +113,7 @@
             document.getElementById("midiout").setAttribute("disabled", "disabled");
             document.getElementById("start").setAttribute("disabled", "disabled");
         }
+        
     </script>
 
   </body>
