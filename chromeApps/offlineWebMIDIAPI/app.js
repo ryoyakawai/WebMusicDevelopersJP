@@ -13,13 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  **/
-var midiOut, midiIn;
+var midiOut, midiIn, inputs, outputs;
 
 navigator.requestMIDIAccess({sysex:false}).then(scb, ecb);
 function scb(access) {
     var br=document.createElement("br");
 
-    var inputs=access.inputs();
+    inputs=access.inputs();
     if(inputs<1) {
         var span=document.createElement("span");
         span.innerHTML="No MIDI Input Device Found.\n";
@@ -45,23 +45,27 @@ function scb(access) {
         inDiv.style.setProperty("font-family", "monospace, monospace");
         document.querySelector("#inputMsg").appendChild(inDiv);
         
-        midiIn=inputs[0];        
+        midiIn=inputs[0];
+        midiIn.onmidimessage=onmidimessage;
+        
         document.querySelector("#mInSel").addEventListener("change", function(){
-            midiIn=outputs[this.value];
-        });
-
-
-        midiIn.onmidimessage=function(event) {
-            var inMsg="";
-            for(var i=0; i<event.data.length; i++) {
-                inMsg+="0x"+event.data[i].toString(16)+" ";
+            for(var i=0; i<inputs.length; i++) {
+                inputs[i].onmidimessage="";
             }
-            var inDiv=document.querySelector("#midiInEvent");
-            inDiv.innerHTML=inMsg+"<br>\n"+inDiv.innerHTML;
-        };
+            inputs[this.value].onmidimessage=onmidimessage;
+        });
+    }
+    function onmidimessage(event) {
+        var inMsg="";
+        for(var i=0; i<event.data.length; i++) {
+            inMsg+="0x"+event.data[i].toString(16)+" ";
+        }
+        var inDiv=document.querySelector("#midiInEvent");
+        inDiv.innerHTML=inMsg+"<br>\n"+inDiv.innerHTML;
     }
 
-    var outputs=access.outputs();
+    
+    outputs=access.outputs();
     if(outputs<1) {
         var span=document.createElement("span");
         span.innerHTML="No MIDI Output Device Found.\n";
