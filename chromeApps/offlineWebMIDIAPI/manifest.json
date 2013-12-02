@@ -1,0 +1,15 @@
+{
+  "name": "Web MIDI API offline TEST",								
+  "description": "This app is a offlibe test of Web MIDI API.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "icons": { "128": "icon128.png" },
+  "permissions" : [
+    "*://www.google.com/*"
+  ],
+  "app": {
+    "background" : {
+      "scripts" : ["background.js"]
+    }
+  }
+}
