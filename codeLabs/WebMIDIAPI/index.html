@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Web MIDI API Basic Application for Code Labs</title>
+    <style type="text/css">
+    body {
+      font-family:Arial;
+      padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      /* background-image: url(images/body-bg.jpg); */
+    }
+    .panicArea { margin: 30px 0px 0px 20px; float: left; }
+    .panicButton { height:47px; }
+    .appsArea { border: 1px solid #f3f3f3; background-color: #f8f8f8; padding: 20px; border-radius: 5px; -webkit-box-shadow: 0px 0px 1px #303030; width:600px; margin: 0 auto; }
+    .inAppsArea{ width: 560px; float:right; marign: 0px auto; }
+    .deviceSelector{width:448px; float: left;}
+    .deviceSection{margin: 0px 0px 5px 0px;}
+    .clearBoth{clear:both;}
+    .midiinArea{ margin:2px 0px; }
+    .midioutArea{ marign: 2px 0px; }
+    .keyCanvasArea{ margin: 2px 0px; }
+    .blockMargin{margin: 5px 0px;}
+    .programChangeRange{width: 300px; margin: 10px; }
+    </style>
+    <link href="./assets/css/bootstrap.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Web MIDI API Basic Application for Code Labs</a>
+        </div>
+      </div>
+    </div> <!--/.navbar navbar-inverse navbar-fixed-top -->
+
+    <div class="container">
+      <div class="appsArea container">
+        <div class="inAppsArea container">
+          <div id="warning"></div>
+          <div>
+            <div id="selectindevice" class="deviceSection"></div>
+            <div id="selectdevice" class="deviceSection"></div>
+          </div>
+
+          <div class="deviceSelector blockMargin">
+            <span class="label label-default">Device Selector</span>
+            <div class="divInputArea midiinArea">
+              <div class="input-group input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-log-in"></span></span>
+                <select id="midiInSel" type="text" class="form-control input"></select>
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" id="midiInSelB" type="button">Select</button>
+                </span>
+              </div><!-- /.input-group .input-group -->
+            </div><!-- /.divInputArea -->
+            <div class="midioutArea">
+              <div class="input-group input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-log-out"></span></span>
+                <select id="midiOutSel" type="text" class="form-control input"></select>
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" id="midiOutSelB" type="button">Select</button>
+                </span>
+              </div><!-- /.input-group .input-group -->
+            </div><!-- /.divInputArea -->
+          </div>
+          <div class="panicArea"><input id="panicButton" class="btn btn-warning panicButton" type="button" value="Panic"></div>
+          <br class="clearBoth">
+
+          <div class="blockMargin">
+            <span class="label label-default">ProgramChange</span>
+            <div>
+              <input id="programChangeRange" class="programChangeRange" type="range" min="0" max="127" value="0">
+              <span id="voiceName">-</span>
+            </div>
+          </div><!-- /.divInputArea -->
+
+          <span class="label label-default">Keyboard</span>
+          <div class="keyCanvasArea"><canvas id="keyboard"></canvas></div>
+          
+        </div><!-- /.inAppsArea -->
+      </div><!-- /.appsArea -->
+    </div><!-- /.container -->
+    
+    <!-- JavaScript Files -->
+    <script type="text/javascript" src="js/WebMIDIAPI.js"></script>
+    <script type="text/javascript" src="js/WebMIDIAPIWrapper.js"></script>
+    <script type="text/javascript" src="js/flatKeyboard.js"></script>
+    <script type="text/javascript" src="js/voiceList.js"></script>
+    <script type="text/javascript" src="js/app.native.js"></script>
+
+  </body>
+</html>
