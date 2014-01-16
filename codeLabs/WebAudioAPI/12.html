@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h1>Analyser</h1>
+    <button onclick="Play()">Play</button><br/>
+    <button onclick="Stop()">Stop</button><br/>
+    <table>
+      <tr><td>Frequency/TimeDomain : </td><td><select id="mode" onchange="Setup()"><option>Frequency</option><option>TimeDomain</option></select></td></tr>
+      <tr><td>SmoothingTimeConstant : </td><td><input type="text" id="smoothing" value="0.9" onchange="Setup()"/></td></tr>
+      <tr><td>MinDecibels : </td><td><input type="text" id="min" onchange="Setup()"/></td></tr>
+      <tr><td>MaxDecibels : </td><td><input type="text" id="max" onchange="Setup()"/></td></tr>
+    </table>
+    <br/><br/>
+    <canvas id="graph" width=256 height=256></canvas>
+    <hr/>
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+
+    var buffer = null;
+    LoadSample(audioctx, "contents/loop.wav");
+
+    var mode = 0;
+    var src = null;
+    var analyser = audioctx.createAnalyser();
+    analyser.fftSize = 1024;
+    document.getElementById("min").value = analyser.minDecibels;
+    document.getElementById("max").value = analyser.maxDecibels;
+
+    var ctx = document.getElementById("graph").getContext("2d");
+    var gradbase = ctx.createLinearGradient(0, 0, 0, 256);
+    gradbase.addColorStop(0, "rgb(20,22,20)");
+    gradbase.addColorStop(1, "rgb(20,20,200)");
+    var gradline = [];
+    for(var i = 0; i < 256; ++i) {
+        gradline[i] = ctx.createLinearGradient(0, 256 - i, 0, 256);
+        var n = (i & 64) * 2;
+        gradline[i].addColorStop(0, "rgb(255,0,0)");
+        gradline[i].addColorStop(1, "rgb(255," + i + ",0)");
+    }
+
+    function Stop() {
+        if(src) src.stop(0);
+        src = null;
+    }
+
+    function Play() {
+        if(src === null) {
+            src = audioctx.createBufferSource();
+            src.buffer = buffer;
+            src.loop = true;
+            src.connect(audioctx.destination);
+            src.connect(analyser);
+            src.start(0);
+        }
+    }
+
+    function LoadSample(ctx, url) {
+        var req = new XMLHttpRequest();
+        req.open("GET", url, true);
+        req.responseType = "arraybuffer";
+        req.onload = function () {
+            if(req.response)
+            buffer = ctx.createBuffer(req.response, false);
+            else
+            buffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
+        }
+        req.send();
+    }
+
+    function Setup() {
+        mode = document.getElementById("mode").selectedIndex;
+        analyser.minDecibels = parseFloat(document.getElementById("min").value);
+        analyser.maxDecibels = parseFloat(document.getElementById("max").value);
+        analyser.smoothingTimeConstant = parseFloat(document.getElementById("smoothing").value);
+    }
+
+    function DrawGraph() {
+        ctx.fillStyle = gradbase;
+        ctx.fillRect(0, 0, 256, 256);
+        var data = new Uint8Array(256);
+        if(mode == 0) analyser.getByteFrequencyData(data); //Spectrum Data
+        else analyser.getByteTimeDomainData(data); //Waveform Data
+        for(var i = 0; i < 256; ++i) {
+            ctx.fillStyle = gradline[data[i]];
+            ctx.fillRect(i, 256 - data[i], 1, data[i]);
+        }
+    }
+    Setup();
+    setInterval(DrawGraph, 100);
+    </script>
+  </body>
+</html>
