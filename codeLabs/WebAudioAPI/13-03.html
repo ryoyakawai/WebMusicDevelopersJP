@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+    input {
+      margin:0px;
+      padding:5px;
+    }
+    button {
+      width:80px;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>Chorus Test</h1>
+    <img src="images/chorus.png"/><br/>
+Status : <span id="status">Loading...</span><br/>
+    <button onclick="Play()">Play</button><br/>
+    <button onclick="Stop()">Stop</button><br/>
+    <table>
+      <tr><td>Bypass</td><td><input type="checkbox" id="bypass" onchange="Setup()"/></td></tr>
+      <tr><td>Speed</td><td><input type="range" min="0.1" max="10" step="0.1" size="8" id="speed" value="4" onchange="Setup()"/></td><td><div id="speedlabel"></div></td></tr>
+      <tr><td>Depth</td><td><input type="range" min="0.000" max="0.005" step="0.0001" size="8" id="depth" value="0.001" onchange="Setup()"/></td><td><div id="depthlabel"></div></td></tr>
+      <tr><td>Mix</td><td><input type="range" min="0" max="1" step="0.01" size="8" id="mix" value="0.6" onchange="Setup()"/></td><td><div id="mixlabel"></div></td></tr>
+      <tr><td>Output</td><td><input type="range" min="0" max="1" step="0.01" size="8" id="output" value="0.8" onchange="Setup()"/></td><td><div id="outputlabel"></div></td></tr>
+    </table>
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+
+    var buffer = null;
+    LoadSample(audioctx, "contents/loop.wav");
+    var src = null;
+    var lfo = audioctx.createOscillator();
+    var depth = audioctx.createGain();
+    var input = audioctx.createGain();
+    var delay = audioctx.createDelay();
+    var mix = audioctx.createGain();
+    var output = audioctx.createGain();
+
+    input.connect(delay);
+    input.connect(output);
+    lfo.connect(depth);
+    depth.connect(delay.delayTime);
+    delay.connect(mix);
+    mix.connect(output);
+    output.connect(audioctx.destination);
+
+    function Stop() {
+        if(src) src.stop(0);
+        src = null;
+    }
+
+    function Play() {
+        if(src === null) {
+            lfo.start(0);
+            src = audioctx.createBufferSource();
+            src.buffer = buffer;
+            src.loop = true;
+            src.connect(input);
+            src.start(0);
+        }
+    }
+
+    function LoadSample(ctx, url) {
+        var req = new XMLHttpRequest();
+        req.open("GET", url, true);
+        req.responseType = "arraybuffer";
+        req.onload = function () {
+            document.getElementById("status").innerHTML = "Ready";
+            if(req.response)
+            buffer = ctx.createBuffer(req.response, false);
+            else
+            buffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
+        }
+        req.send();
+    }
+
+    function Setup() {
+        var bypass = document.getElementById("bypass").checked;
+        var speedval = parseFloat(document.getElementById("speed").value);
+        var depthval = parseFloat(document.getElementById("depth").value);
+        var mixval = parseFloat(document.getElementById("mix").value);
+        var outputval = parseFloat(document.getElementById("output").value);
+        if(bypass) {
+            mixval = 0;
+            outputval = 1;
+        }
+        delay.delayTime.value = 0.01;
+        lfo.frequency.value = document.getElementById("speedlabel").innerHTML = speedval;
+        depth.gain.value = document.getElementById("depthlabel").innerHTML = depthval;
+        mix.gain.value = document.getElementById("mixlabel").innerHTML = mixval;
+        output.gain.value = document.getElementById("outputlabel").innerHTML = outputval;
+    }
+    Setup();
+
+    </script>
+  </body>
+</html>
