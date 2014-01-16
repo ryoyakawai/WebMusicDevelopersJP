@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>02.とりあえず音を出すコード</title>
+    <style type="text/css">
+    body { font-family: Arial; }
+    </style>
+  </head>
+  <body>
+    <h1>First Step</h1>
+    <h3>02.とりあえず音を出すコード</h3>
+    <img src="images/osc1.png"/><br/>
+    <button onclick="Play()"> Play </button><br/>
+    
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+    
+    var osc = audioctx.createOscillator();
+    osc.connect(audioctx.destination);
+    
+    function Play() {
+        osc.start(0);
+    }
+    </script>
+  </body>
+</html>

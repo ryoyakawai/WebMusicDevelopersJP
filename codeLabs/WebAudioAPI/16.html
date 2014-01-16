@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body onload="LoadBuffers()">
+    <h1>Convolver Test</h1>
+    <img src="images/convolver1.png"/><br/>
+    <button onclick="Play()">Play</button><br/>
+ReverbLevel : <input type="range" id="revlevel" min="0" max="100" value="50" onchange="Setup()"/><span id="revdisp">50</span>
+    <br/><br/>
+    <p>* Impulse Response file from:<br/>
+      <a href="http://www.acoustics.hut.fi/projects/poririrs/">http://www.acoustics.hut.fi/projects/poririrs/</a><br/>
+bin-dfeq.zip <br/>
+(free for non-commercial use)
+    </p>
+    <script type="text/javascript">
+
+    var files = [
+        "contents/rhythmloop.wav",
+        "contents/ir/s1_r1_bd.wav",
+    ];
+
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+
+    var source = null;
+    var convolver = audioctx.createConvolver();
+    var revlevel = audioctx.createGain();
+    revlevel.gain.value=0.5;
+    convolver.connect(revlevel);
+    revlevel.connect(audioctx.destination);
+    var buffers = [];
+    var loadidx = 0;
+    var req = new XMLHttpRequest();
+
+    function LoadBuffers() {
+        req.open("GET", files[loadidx], true);
+        req.responseType = "arraybuffer";
+        req.onload = function() {
+            if(req.response) {
+                audioctx.decodeAudioData(req.response,function(b){
+                    buffers[loadidx]=b;
+                    if(++loadidx < files.length)
+                    LoadBuffers();
+                },function(){});
+            }
+            else
+            buffers[loadidx] = audioctx.createBuffer(VBArray(req.responseBody).toArray(), false);
+        };
+        req.send();
+    }
+    function Setup() {
+        var lev=document.getElementById("revlevel").value;
+        revlevel.gain.value=parseInt(lev)*0.01;
+        document.getElementById("revdisp").innerHTML=lev;
+    }
+    function Play() {
+        if(source == null) {
+            source = audioctx.createBufferSource();
+            source.buffer = buffers[0];
+            convolver.buffer = buffers[1];
+            source.loop = true;
+            source.connect(audioctx.destination);
+            source.connect(convolver);
+            source.start(0);
+        }
+        else {
+            source.stop(0);
+            source = null;
+        }
+    }
+    </script>
+  </body>
+</html>

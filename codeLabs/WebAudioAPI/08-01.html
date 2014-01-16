@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h1>FM synthesize Test</h1>
+    <img src="images/fm.png"/><br/>
+OP1 Freq : <input type="text" size="10" id="op1freq" value="220"/><br/>
+OP1 Level: <input type="text" size="10" id="op1level" value="300"/><br/>
+OP2 Freq : <input type="text" size="10" id="op2freq" value="440"/><br/>
+OP2 Level: <input type="text" size="10" id="op2level" value="1"/><br/>
+    <br/>
+    <button onclick="Setup()">Set</button><br/>
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+
+    var play = 0;
+    var op1 = audioctx.createOscillator();
+    var gain1 = audioctx.createGain();
+    var op2 = audioctx.createOscillator();
+    var gain2 = audioctx.createGain();
+
+    op1.connect(gain1);
+    gain1.connect(op2.frequency);
+    op2.connect(gain2);
+    gain2.connect(audioctx.destination);
+
+    function Setup() {
+        if(play == 0) {
+            play = 1;
+            op1.start(0);
+            op2.start(0);
+        }
+        op1.frequency.value = parseFloat(document.getElementById("op1freq").value);
+        gain1.gain.value = parseFloat(document.getElementById("op1level").value);
+        op2.frequency.value = parseFloat(document.getElementById("op2freq").value);
+        gain2.gain.value = parseFloat(document.getElementById("op2level").value);
+    }
+    </script>
+
+  </body>
+</html>
