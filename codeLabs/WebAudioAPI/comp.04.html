@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h1>Vibrato Test</h1>
+    <img src="images/vibrato.png"/><br/>
+    <table>
+      <tr><td>LFO Freq : </td><td><input type="text" size="10" id="lfofreq" value="5"/></td></tr>
+      <tr><td>Depth    : </td><td><input type="text" size="10" id="depth" value="10"/></td></tr>
+      <tr><td>VCO Freq : </td><td><input type="text" size="10" id="vcofreq" value="440"/></td></tr>
+    </table>
+    <br/>
+    <button onclick="Setup()">Set</button><br/>
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+    
+    var play = 0;
+    var vco = audioctx.createOscillator();
+    var lfo = audioctx.createOscillator();
+    
+    var depth = audioctx.createGain();
+    
+    vco.connect(audioctx.destination);
+    lfo.connect(depth);
+    depth.connect(vco.frequency);   // <== connect to frequency parameter of vco
+    
+    function Setup() {
+        if(play == 0) {
+            play = 1;
+            vco.start(0);
+            lfo.start(0);
+        }
+        vco.frequency.value = parseFloat(document.getElementById("vcofreq").value);
+        lfo.frequency.value = parseFloat(document.getElementById("lfofreq").value);
+        depth.gain.value = parseFloat(document.getElementById("depth").value);
+        
+    }
+    </script>
+    
+  </body>
+</html>

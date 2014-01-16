@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>03.オシレーターの使い方 - オシレーターのタイミング制御</title>
+    <style type="text/css">
+    body { font-family: Arial; }
+    </style>
+  </head>
+  <body>
+    <h1>Oscillator Timing Control</h1>
+    <h3>03.オシレーターの使い方 - オシレーターのタイミング制御</h3>
+    <br/>
+    <img src="images/osctiming.png"/><br/>
+    <button onclick="Setup()">Start</button><br/>
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+    
+    function Setup() {
+        var t0 = audioctx.currentTime;
+        for(var i = 0; i < 10; ++i) {
+            var osc = audioctx.createOscillator();
+            osc.connect(audioctx.destination);
+            osc.start(t0 + i * 0.5 + 0.5);
+            osc.stop(t0 + i * 0.5 + 0.6);
+        }
+    }
+    </script>
+  </body>
+</html>
