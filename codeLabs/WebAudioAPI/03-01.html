@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>03.オシレーターの使い方</title>
+    <style type="text/css">
+    body { font-family: Arial; }
+    </style>
+  </head>
+  <body>
+    <h1>Oscillator</h1>
+    <h3>03.オシレーターの使い方</h3>
+    <img src="images/osc2.png"/>
+    <table>
+      <tr><td>Type</td><td><select id="type" onchange="Setup()"><option>Sine</option><option>Square</option><option>SawTooth</option><option>Triangle</option></select></td></tr>
+      <tr><td>Freq(Hz)</td><td><input type="range" min="50" max="5000" size="10" id="freq" value="440" onchange="Setup()"/></td></tr>
+      <tr><td>Level</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="level" value="1" onchange="Setup()"/></td></tr>
+    </table>
+    <br/>
+    <button onclick="Setup()">Set</button><br/>
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    // #1 AudioContext を作成
+    
+    var play=0;
+    var osc = audioctx.createOscillator();
+
+    // #2 gain node を作成
+
+    // #3 oscillator node(osc) を gain node に接続
+
+    // #4 #2で作成した gain node を AudioContext に接続
+    
+    function Setup() {
+        if(play == 0) {
+            // #5 oscillator node を start
+
+            play = 1;
+        }
+        var type = document.getElementById("type").selectedIndex;
+        var freq = parseFloat(document.getElementById("freq").value);
+        var level = parseFloat(document.getElementById("level").value);
+        
+        // #6 oscillator node の種類(type) を type(変数名) に変更
+
+        // #7 oscillator node の周波数(frequency) を freq(変数名) に変更
+
+        // #8 gain node の値を level(変数名) に変更
+
+    }
+    
+    </script>
+  </body>
+</html>

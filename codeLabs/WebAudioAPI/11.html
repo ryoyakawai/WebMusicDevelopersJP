@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h1>Oscillator Custom waveform</h1>
+    <img src="images/osccustom.png"/>
+    <hr/>
+    <div>
+      <div style="float:left;margin:5px">
+        <table>
+          <tr><td>Freq</td><td><input type="text" size="10" id="freq" value="440"/></td></tr>
+          <tr><td>Gain</td><td><input type="text" size="10" id="gain" value="0.5"/></td></tr>
+          <tr><td><br/></td></tr>
+          <tr><td>Harmonics</td><td>real</td><td>imag</td></tr>
+          <tr><td>0</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real0" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag0" value="0" onchange="Setup()"/></td></tr>
+          <tr><td>1</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real1" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag1" value="1" onchange="Setup()"/></td></tr>
+          <tr><td>2</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real2" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag2" value="0.5" onchange="Setup()"/></td></tr>
+          <tr><td>3</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real3" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag3" value="0" onchange="Setup()"/></td></tr>
+          <tr><td>4</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real4" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag4" value="0" onchange="Setup()"/></td></tr>
+          <tr><td>5</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real5" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag5" value="0" onchange="Setup()"/></td></tr>
+          <tr><td>6</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real6" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag6" value="0" onchange="Setup()"/></td></tr>
+          <tr><td>7</td><td><input type="range" min="0" max="1" step="0.01" size="10" id="real7" value="0" onchange="Setup()"/></td><td><input type="range" min="0" max="1" step="0.01" size="10" id="imag7" value="0" onchange="Setup()"/></td></tr>
+        </table>
+        <button onclick="Setup()">Set</button><br/>
+      </div>
+      <div style="float:left;margin-top:30px;">
+        <canvas id="waveform" width ="512" height="256">  </canvas>
+      </div>
+    </div>
+    <script type="text/javascript">
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioctx = new AudioContext();
+
+    var osc = audioctx.createOscillator();
+    var gain = audioctx.createGain();
+    var cap = audioctx.createScriptProcessor(1024, 1, 1);
+    cap.onaudioprocess = Capture;
+
+    var freq = 440;
+    var synccount = 0;
+    var capturebuf = new Array(512);
+    var capindex = 0;
+
+    osc.connect(gain);
+    gain.connect(cap);
+    cap.connect(audioctx.destination);
+
+    var tablen = 8;
+    var real = new Float32Array(tablen);
+    var imag = new Float32Array(tablen);
+
+    function Setup() {
+        osc.start(0);
+        for(i = 0; i < tablen; i++) {
+            /* make Harmonics */
+            real[i] = parseFloat(document.getElementById("real"+i).value);
+            imag[i] = parseFloat(document.getElementById("imag"+i).value);
+        }
+        var waveTable = audioctx.createPeriodicWave(real, imag);    //create waveTable
+        osc.setPeriodicWave(waveTable); //set to Oscillator
+        freq = parseFloat(document.getElementById("freq").value);
+        osc.frequency.value = freq;
+        gain.gain.value = parseFloat(document.getElementById("gain").value);
+    }
+
+    /////////////for Display
+    function Capture(ev) {
+        var inbuf = ev.inputBuffer.getChannelData(0);
+        var outbuf = ev.outputBuffer.getChannelData(0);
+        var period = audioctx.sampleRate / freq;
+        for(var i = 0; i < 1024; ++i) {
+            outbuf[i] = inbuf[i];
+            if(capindex < 512) capturebuf[capindex++] = inbuf[i];
+            if(++synccount >= period) {
+                /* for Display Sync */
+                synccount -= period;
+                if(capindex >= 512) capindex = 0;
+            }
+        }
+    }
+
+    function DrawGraph() {
+        var canvas = document.getElementById("waveform");
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#222222";
+        ctx.fillRect(0, 0, 512, 512);
+        ctx.fillStyle = "#00ff44";
+        ctx.fillRect(0, 128, 512, 1);
+        for(var i = 0; i < 512; ++i) {
+            var v = 128 - capturebuf[i] * 128;
+            ctx.fillRect(i, v, 1, 128 - v);
+        }
+    }
+    setInterval(DrawGraph, 100);
+    </script>
+
+  </body>
+</html>
