@@ -4,7 +4,7 @@ var midiout;
 var timerId;
 
 window.onload=function() {
-    // #1 requestMIDIAccessでMIDIデバイスを取得する
+    // #1 requestMIDIAccessでMIDIデバイスを取得
 };
     
 // #2 MIDIデバイスの取得が完了した時のCallback
@@ -16,10 +16,10 @@ function scb(access) {
     // #4 outputデバイス一覧ををGlobal変数outputsへ
 
     var mi=document.getElementById("midiInSel");
-    // #5 プルダウンメニューにinputデバイスをリストする
+    // #5 プルダウンメニューにinputデバイスをリストアップ
 
     var mo=document.getElementById("midiOutSel");
-    // #6 プルダウンメニューにoutputデバイスをリストする
+    // #6 プルダウンメニューにoutputデバイスをリストアップ
 
     /* Inputボタンを押した時の動作 */
     document.getElementById("midiInSelB").addEventListener("click", function(){
@@ -29,7 +29,7 @@ function scb(access) {
                 return;
             };
         }
-        // #7 選択したデバイスのinputポートにEventを指定する
+        // #7 選択したデバイスのinputポートにEventを指定
         /*
           注) ソフトウェアキーボードの動作させる為、Event内に必ず追加
            fKey.onmessage(event.data);
@@ -39,7 +39,7 @@ function scb(access) {
     /* Outputボタンを押した時の動作 */
     document.getElementById("midiOutSelB").addEventListener("click", function(){
         var port=document.getElementById("midiOutSel").value;
-        // #7 選択したデバイスをoutputポートに指定する
+        // #7 選択したデバイスをoutputポートに指定
 
         fKey.setConnected();
     });
@@ -52,7 +52,7 @@ function scb(access) {
 
     /* Panicボタンを押した時の動作 */
     document.getElementById("panicButton").addEventListener("click", function(){
-        // #8 AllSoundOff, resetAllController, allNoteOff のメッセージを送信する
+        // #8 AllSoundOff, resetAllController, allNoteOff のメッセージを送信
         /*
           AllSoundOff        : 0xb0 0x78 0x00
           resetAllController : 0xb0 0x79 0x00
