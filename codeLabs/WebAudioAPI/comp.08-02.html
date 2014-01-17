@@ -23,11 +23,9 @@ Osc-1 Freq : <input type="text" size="10" id="osc1freq" value="777"/><br/>
     var osc2 = audioctx.createOscillator();
     var gain = audioctx.createGain();
 
-    // #1 osc1 を gain の gain に接続
-
-    // #2 osc2 を gain に接続
-
-    // #3 gain を AudioContext に接続
+    osc1.connect(gain.gain);
+    osc2.connect(gain);
+    gain.connect(audioctx.destination);
 
     function Setup() {
         if(play == 0) {

@@ -21,17 +21,14 @@
     var audioctx = new AudioContext();
 
     var scrproc = audioctx.createScriptProcessor(bufsize);
-    // #1 関数 Process を onaudioprocess とする
-    
-    // #2 scrproc を AudioContextに接続をする
 
+    scrproc.onaudioprocess = Process;
+    scrproc.connect(audioctx.destination);
     var osc = null;
 
     function Process(ev) {
         var buf0 = ev.outputBuffer.getChannelData(0);
-
-        // #3 buf1 を ev の channeldata(1) とする
-
+        var buf1 = ev.outputBuffer.getChannelData(1);
         for(var i = 0; i < bufsize; ++i)
         buf0[i] = buf1[i] = (Math.random() - 0.5) * play;
     }
@@ -44,12 +41,9 @@
         }
         else {
             if(typeof(audioctx.createOscillator)!=="undefined") {
-                // #4 変数名を osc として oscillator nodeを作成
-
-                // #5 osc(oscillator node)を scrproc に接続
-
-                // #6 osc(oscillator node)を start
-
+                osc = audioctx.createOscillator();
+                osc.connect(scrproc);
+                osc.start(0);
             }
             play = 1;
         }

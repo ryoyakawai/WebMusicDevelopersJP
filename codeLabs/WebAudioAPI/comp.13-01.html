@@ -26,23 +26,29 @@
     var buffer = null;
     LoadSample(audioctx, "contents/loop.wav");
     var src = null;
-    var input = /* #1 gain node を作成 */ ;
-    var delay = /* #2 delay node を作成 */ ;
-    var wetlevel = /* #3 gain node を作成 */ ;
-    var drylevel = /* #4 gain node を作成 */ ;
-    var feedback = /* #5 gain node を作成 */ ;
+    var input = audioctx.createGain(); // #1 gain node を作成
+    var delay = audioctx.createDelay(); // #2 delay node を作成
+    var wetlevel = audioctx.createGain(); // #3 gain node を作成
+    var drylevel = audioctx.createGain(); // #4 gain node を作成
+    var feedback = audioctx.createGain(); // #5 gain node を作成
     /**
-     * #6 node の接続
+     * #6 nodeを接続
      *  input -> delay
+     *  input -> drylevel
      *  delay -> wetlevel
-     *  wetlevel -> AudioContext
-     *
      *  delay -> feedback
      *  feedback -> delay
-     *
-     *  input -> drylevel
-     *  drylevel -> AudioContext
+     *  wetlevel -> AudioContext
+     *  drylevel -> AUdioCOntext
      **/
+
+    input.connect(delay);
+    input.connect(drylevel);
+    delay.connect(wetlevel);
+    delay.connect(feedback);
+    feedback.connect(delay);
+    wetlevel.connect(audioctx.destination);
+    drylevel.connect(audioctx.destination);
 
     function Stop() {
         if(src) src.stop(0);

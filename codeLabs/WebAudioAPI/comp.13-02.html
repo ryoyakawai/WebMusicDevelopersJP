@@ -26,30 +26,15 @@
     var buffer = null;
     LoadSample(audioctx, "contents/loop.wav");
     var src = null;
-    var input = /* #1 gain node を作成 */ ;
-    var splitter = /* #2 channelSplitter node を作成*/ ;
-    var predelay = /* #3 delay node を作成*/ ;
-    var merger = /* #4 channelMager node を作成*/ ;
-    var delay = /* #5 delay node を作成 */ ;
-    var wetlevel = /* #6 gain node を作成 */ ;
-    var drylevel = /* #7 gain node を作成 */ ;
-    var feedback = /* #8 gain node を作成 */ ;
+    var input = audioctx.createGain();
+    var splitter = audioctx.createChannelSplitter();
+    var predelay = audioctx.createDelay();
+    var merger = audioctx.createChannelMerger();
+    var delay = audioctx.createDelay();
+    var wetlevel = audioctx.createGain();
+    var drylevel = audioctx.createGain();
+    var feedback = audioctx.createGain();
     
-/**
- * #9 node の接続
- *  input -> splitter
- *  splitter -> predelay (0)
- *  splitter -> merger (1, 1) 
- *  predelay -> merger (0, 0)
- *  merger -> delay
- *
- *  delay -> wetlevel
- *  delay -> feedback
- *  feedbck -> AudioContext
- *
- *  input -> drylevel
- *  drylevel -> AudioContext
- **/    
     input.connect(splitter);
     input.connect(drylevel);
     splitter.connect(predelay,0);

@@ -30,11 +30,10 @@ bin-dfeq.zip <br/>
     var audioctx = new AudioContext();
 
     var source = null;
-    var convolver = /* #1 convolver node を作成*/ ;
+    var convolver = audioctx.createConvolver();
     var revlevel = audioctx.createGain();
     revlevel.gain.value=0.5;
-    /* #2 convolver node を gain node(revlevel) に接続 */
-
+    convolver.connect(revlevel);
     revlevel.connect(audioctx.destination);
     var buffers = [];
     var loadidx = 0;

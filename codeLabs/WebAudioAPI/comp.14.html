@@ -33,12 +33,10 @@
     LoadSample(audioctx, "contents/loop.wav");
     var src = null;
 
-    // #1 waveShaper node を作成
-
+    var shaper = audioctx.createWaveShaper();
     var analyser = audioctx.createAnalyser();
 
-    // #2 waveShaper node(shaper) を analyser node(analyser) に接続
-
+    shaper.connect(analyser);
     analyser.connect(audioctx.destination);
 
     var ctx = document.getElementById("graph").getContext("2d");
@@ -81,7 +79,6 @@
         for(var i = 0; i < 4096; ++i) {
             curve[i] = (((i/4096) * steps)|0)/(steps-1)*2-1;
         }
-        // #3 shaper.curve を curve にする
         shaper.curve = curve;       // set curve to WaveShaper
     }
 

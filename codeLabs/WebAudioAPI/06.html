@@ -27,18 +27,9 @@
     }
     
     function LoadSample(ctx, url) {
-        var req = new XMLHttpRequest();
-        req.open("GET", url, true);
-        req.responseType = "arraybuffer";
-        req.onload = function() {
-            if(req.response) {
-                //          buffer = ctx.createBuffer(req.response, false);
-                ctx.decodeAudioData(req.response,function(b){buffer=b;},function(){});
-            }
-            else
-            buffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
-        }
-        req.send();
+        // #1 XMLHttpRequest で url のコンテンツを取得して arraybuffer で読み込み
+        //    そのデータをデコード。
+
     }
     </script>
 

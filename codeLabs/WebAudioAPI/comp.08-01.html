@@ -26,23 +26,16 @@ OP2 Level: <input type="text" size="10" id="op2level" value="1"/><br/>
     var op2 = audioctx.createOscillator();
     var gain2 = audioctx.createGain();
 
-    // #1 op1 を gain1 に接続
-
-    // #2 gain1 を op2 の frequency に接続
-
-    // #3 op2 を gain2 に接続
-
-    // #4 gain2 を AudioContext に接続
-
+    op1.connect(gain1);
+    gain1.connect(op2.frequency);
+    op2.connect(gain2);
+    gain2.connect(audioctx.destination);
 
     function Setup() {
         if(play == 0) {
             play = 1;
-
-            // #5 op1 を start
-
-            // #6 op2 を start
-            
+            op1.start(0);
+            op2.start(0);
         }
         op1.frequency.value = parseFloat(document.getElementById("op1freq").value);
         gain1.gain.value = parseFloat(document.getElementById("op1level").value);

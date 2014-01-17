@@ -90,8 +90,7 @@ Drag to set position. Shift+Drag to set velocity.
         px = parseFloat(document.getElementById("posxdisp").innerHTML=document.getElementById("posx").value);
         py = parseFloat(document.getElementById("posydisp").innerHTML=document.getElementById("posy").value);
         pz = parseFloat(document.getElementById("poszdisp").innerHTML=document.getElementById("posz").value);
-        // #2 pnner node の position を設定。 今回の値 ▶　(px * 0.1, py * 0.1, pz * 0.1)
-
+        panner.setPosition(px * 0.1, py * 0.1, pz * 0.1);
         vx = parseFloat(document.getElementById("velxdisp").innerHTML=document.getElementById("velx").value);
         vy = parseFloat(document.getElementById("velydisp").innerHTML=document.getElementById("vely").value);
         vz = parseFloat(document.getElementById("velzdisp").innerHTML=document.getElementById("velz").value);
@@ -118,7 +117,7 @@ Drag to set position. Shift+Drag to set velocity.
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         audioctx = new AudioContext();
 
-        panner = /* #1 panner node を作成*/ ;
+        panner = audioctx.createPanner();
         panner.panningModel=0;
         panner.connect(audioctx.destination);
         var req = new XMLHttpRequest();

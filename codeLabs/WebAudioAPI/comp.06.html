@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
+  <head>
+    <meta charset="utf-8">
+    <title>06.バッファソースでワンショットサンプルから音を出す</title>
+    <style type="text/css">
+    body { font-family: Arial; }
+    </style>
+  </head>
   <body>
     <h1>Buffer source</h1>
+    <h3>06.バッファソースでワンショットサンプルから音を出す</h3>
     <img src="images/buffersource.png"/><br/>
     <button onclick="Play()">Play</button><br/>
     <script type="text/javascript">
@@ -27,9 +34,9 @@
             if(req.response) {
                 //          buffer = ctx.createBuffer(req.response, false);
                 ctx.decodeAudioData(req.response,function(b){buffer=b;},function(){});
+            } else {
+                buffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
             }
-            else
-            buffer = ctx.createBuffer(VBArray(req.responseBody).toArray(), false);
         }
         req.send();
     }
@@ -37,3 +44,4 @@
 
   </body>
 </html>
+

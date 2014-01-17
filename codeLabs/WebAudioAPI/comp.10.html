@@ -36,19 +36,14 @@
     var data = new Float32Array(bufsize);
     
     var scrproc = audioctx.createScriptProcessor(bufsize);
-    // #1 filter を biquaeFilter node とし、 global 変数として定義
-
+    var filter = audioctx.createBiquadFilter();
     var osc;
     scrproc.onaudioprocess = Process;
-
-    // #2 scriptProcessor node(scrproc) を biquadFilter node(filter) に接続
-
-    // #3 biquadFilter node(filter) に AudioContext に接続
-
+    scrproc.connect(filter);
+    
+    filter.connect(audioctx.destination);
     filter.type = 0;
-
-    // #4 biquadFilter node(filter) の 周波数を 5000 に設定(5000に特に意味はありません)
-
+    filter.frequency.value = 5000;
     filter.Q.value = 5;
     
     function Setup() {
@@ -83,7 +78,6 @@
     
     
     /////////////////////////
-    /* analyser node は 「12.アナライザーの使い方」にて本格的に行います */
     var analyzer = audioctx.createAnalyser();
     filter.connect(analyzer);
     setInterval(DrawGraph,100);

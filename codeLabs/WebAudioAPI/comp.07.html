@@ -9,7 +9,6 @@
   </head>
   <body>
     <h1>AudioParam Automation</h1>
-    <h3>07.パラメータとオートメーション</h3>
     <br/>
     <table>
       <tr><td> Attack : </td><td> <input id="atk" type="text" size="10" value="0.3"/> </td><td> linearRampToValueAtTime() </td></tr>
@@ -44,28 +43,18 @@
         var t1 = t0 + parseFloat(document.getElementById("atk").value);
         var d = parseFloat(document.getElementById("dcy").value);
         var s = parseFloat(document.getElementById("sus").value);
-
-        // #1 時間がt0になったら gain node の値を0にする 
-
-        // #2 時間がt1に gain node の値を1にするように線形変化させる 
-
-        // #3 時間がt1になったら s に向かって gain node の値を d の値にしたがって漸化的に変化させる
-
+        gain.gain.setValueAtTime(0, t0);
+        gain.gain.linearRampToValueAtTime(1, t1);
+        gain.gain.setTargetAtTime(s, t1, d);
     }
     function KeyOff() {
         var r = parseFloat(document.getElementById("rel").value);
         var t0 = audioctx.currentTime;
-
-        // #4 時間がt0になったら gain node のスケジュールをキャンセルする 
-
-        // #5 時間がt0になったら gain node の値を現在の gain node の値にする 
-
-        // #6 時間がt0になったら 0 に向かって gain node の値を d の値にしたがって漸化的に変化させる
-
+        gain.gain.cancelScheduledValues(t0);
+        gain.gain.setValueAtTime(gain.gain.value, t0);
+        gain.gain.setTargetAtTime(0, t0, r);
     }
     
-
-    /* canvas */
     var x = 0;
     var ctx = document.getElementById("canvas").getContext("2d");
     ctx.fillStyle = "#222222";

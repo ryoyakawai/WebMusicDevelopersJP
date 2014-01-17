@@ -35,12 +35,26 @@ Status : <span id="status">Loading...</span><br/>
     var buffer = null;
     LoadSample(audioctx, "contents/loop.wav");
     var src = null;
-    var lfo = audioctx.createOscillator();
-    var depth = audioctx.createGain();
-    var input = audioctx.createGain();
-    var delay = audioctx.createDelay();
-    var mix = audioctx.createGain();
-    var output = audioctx.createGain();
+    var lfo = /* #1 oscillator node を作成 */ audioctx.createOscillator();
+    var depth = /* #2 gain node を作成 */ audioctx.createGain();
+    var input = /* #3 gain node を作成 */ audioctx.createGain();
+    var delay = /* #4 delay node を作成 */ audioctx.createDelay();
+    var mix = /* #5 gain node を作成 */ audioctx.createGain();
+    var output = /* #6 gain node を作成 */ audioctx.createGain();
+
+/**
+ * #7 node の接続
+ *  input -> delay
+ *  delay -> mix
+ *  mix -> output
+ *
+ *  input -> output
+ *
+ *  output -> AudioContext 
+ *
+ *  lfo -> depth
+ *  depth -> delay.delayTime
+ **/    
 
     input.connect(delay);
     input.connect(output);

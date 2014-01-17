@@ -30,7 +30,7 @@
     sig.onaudioprocess = Signal;
 
     var gain = audioctx.createGain();
-    var comp = /* #1 dynamicCompressor node を作成 */ ;
+    var comp = audioctx.createDynamicsCompressor();
     var ana = audioctx.createScriptProcessor(1024, 1, 1);
     var timer;
     var testcount = 0;
@@ -42,8 +42,7 @@
     gain.gain.value = 0;
     sig.connect(gain);
     gain.connect(comp);
-    // #2 dynamicCompressor node(comp) を analyser node(ana) に接続
-
+    comp.connect(ana);
     ana.connect(audioctx.destination);
     Draw();
 

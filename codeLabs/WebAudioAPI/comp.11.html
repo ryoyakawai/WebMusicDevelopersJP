@@ -64,10 +64,9 @@
             imag[i] = parseFloat(document.getElementById("imag"+i).value);
         }
 
-        // #1 waveTable を periodicWave node とし、global変数として定義
 
-        // #2 oscillator(osc) の periodicWave に waveTable をセット
-
+        var waveTable = audioctx.createPeriodicWave(real, imag);    //create waveTable
+        osc.setPeriodicWave(waveTable); //set to Oscillator
         freq = parseFloat(document.getElementById("freq").value);
         osc.frequency.value = freq;
         gain.gain.value = parseFloat(document.getElementById("gain").value);
