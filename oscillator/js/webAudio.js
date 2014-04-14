@@ -1,15 +1,16 @@
 var WebAudio = function() {
-  var audioContext = new webkitAudioContext();
-  var gainNode = audioContext.createGainNode();
-  var osc = new Array();
-  var gainValue = 0.3;
-  var oscType = 'sine';
-  var oscPreset = {
-    'sine':0,
-    'square':1,
-    'sawtooth':2,
-    'triangle':3,
-  };
+
+    var audioContext = new (window.webkitAudioContext||window.AudioContext);
+    var gainNode = audioContext.createGainNode();
+    var osc = new Array();
+    var gainValue = 0.3;
+    var oscType = 'sine';
+    var oscPreset = {
+        'sine':0,
+        'square':1,
+        'sawtooth':2,
+        'triangle':3,
+    };
 
 
   // create frequency

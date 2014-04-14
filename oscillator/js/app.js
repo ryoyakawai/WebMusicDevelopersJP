@@ -47,41 +47,40 @@ $(document).ready(function(){
   });
 
     // midi
-    navigator.requestMIDIAccess({sysex:false}).then(scb, ecb);
-    var midi, inputs, mIn;
-    function scb(access) {
-        midi=access;
-        inputs=access.inputs();
-        var mi=document.getElementById("midiInSel");
-        for(var i=0; i<inputs.length; i++) {
-            var deviceName=inputs[i]["name"];
-            mi.options[i]=new Option(deviceName, i);
+    if(navigator.requestMIDIAccess) {
+        navigator.requestMIDIAccess({sysex:false}).then(scb, ecb);
+        var midi, inputs, mIn;
+        function scb(access) {
+            midi=access;
+            inputs=access.inputs();
+            var mi=document.getElementById("midiInSel");
+            for(var i=0; i<inputs.length; i++) {
+                var deviceName=inputs[i]["name"];
+                mi.options[i]=new Option(deviceName, i);
+            }
+            document.getElementById("midion").addEventListener("click", function(event){
+                var selIdx=document.getElementById("midiInSel").selectedIndex;
+                midiConnected(inputs[selIdx].name);
+                mIn=inputs[selIdx];
+                mIn.onmidimessage=function(event) {
+                    var a=event.data[0].toString(16).substr(0,1);
+                    fKey.onmessage(event.data);
+                    switch(a) {
+                      case "8":
+                        webAudio.noteOff(event.data[1]);
+                        break;
+                      case "9":
+                        webAudio.noteOn(event.data[1]);
+                        if(event.data[2]==0) webAudio.noteOff(event.data[1]);
+                        break;
+                    }
+                };
+            });
         }
-        document.getElementById("midion").addEventListener("click", function(event){
-            var selIdx=document.getElementById("midiInSel").selectedIndex;
-            midiConnected(inputs[selIdx].name);
-            mIn=inputs[selIdx];
-            mIn.onmidimessage=function(event) {
-                var a=event.data[0].toString(16).substr(0,1);
-                fKey.onmessage(event.data);
-                switch(a) {
-                  case "8":
-                    webAudio.noteOff(event.data[1]);
-                    break;
-                  case "9":
-                    webAudio.noteOn(event.data[1]);
-                    if(event.data[2]==0) webAudio.noteOff(event.data[1]);
-                    break;
-                }
-            };
-        });
-
-
+        function ecb(event) {
+            console.log("[ERROR] requestMIDIAccess", event);
+        }
     }
-    function ecb(event) {
-        console.log("[ERROR] requestMIDIAccess", event);
-    }
-
     
 });
 
