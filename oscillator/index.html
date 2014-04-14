@@ -1,72 +1,68 @@
 <html>
-		<head>
-				<meta charset="UTF-8">
-				<title>Oscillator Sample [WebAudioAPI / WebMIDIAPI] </title>
-				<link type="text/css" rel="stylesheet" href="css/main.css" >
-		</head>
-		<body>
-
-      <h2>Oscillator Sample [Web Audio API / Web MIDI API]</h2>
-
-						<div class="midiconnect">
-        <div class="midiLabel">MIDI</div>
-								<!--<div class="midiStatus" status="off"></div>-->
-								<div class="left"><input type="button" class="midiStatus" status="off" value="MIDI ON"></div>
-								<div class="connectionstatus"></div>
-								<br style="clear:both;">
-								<div style="width:900px; margin: -14px 0px 0px 15px; font-size: 70%;">
-										このページは<a href="https://github.com/cwilso/WebMIDIAPIShim" target="_blank">WebMIDIShim</a>により<a href="http://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>をシミュレートしておりUSB-MIDIデバイスからの発音が可能です。<br>
-										シミュレートには<a href="http://jazz-soft.net/" target="_blank">Jazz-Soft.netのJazz-Plugin</a>が必要です。お試しの際はインストールをお願いいたします。<br>
-										Chrome Packaged AppsでのMIDI入力は現在非対応です。
-								</div>
-						</div>
-
-      <div class="ctrlPanel">
-        <div class="gainLabel">Volume</div>
-        <div class="gainMin">Min</div>
-        <input class="gain" type="range" min="0" max="1" step="0.02" value="0.3">
-        <div class="gainMax">Max</div>
-        <br style="clear:left;">
-
-        <div class="oscLabel">Oscillator Type</div>
-        <div class="oscType">
-          <img src="images/sine.png" class="oscImage" id="sine">
-          <img src="images/square.png" class="oscImage oscOff" id="square">
-          <img src="images/sawtooth.png" class="oscImage oscOff" id="sawtooth">
-          <img src="images/triangle.png" class="oscImage oscOff" id="triangle">
-        </div>
-
+	<head>
+		<meta charset="UTF-8">
+		<title>Oscillator Sample [WebAudioAPI / WebMIDIAPI] </title>
+		<link type="text/css" rel="stylesheet" href="css/main.css" >
+	</head>
+	<body>
+    
+    <h2>Oscillator Sample [Web Audio API / Web MIDI API]</h2>
+    
+		<div class="midiconnect">
+      <div class="midiLabel">MIDI</div>
+			<div style="clear:both;">
+        <select id="midiInSel" style="width:150px;"></select>
+        <input id="midion" type="button" class="midiStatus" status="off" value="Select MIDI INPUT">
       </div>
-
-      <div class="canvasKenban">
-        <canvas id="canvasKenban" width="650" height="122"></canvas>
+      
+			<div class="connectionstatus"></div>
+			<br style="clear:both;">
+		</div>
+    
+    <div class="ctrlPanel">
+      <div class="gainLabel">Volume</div>
+      <div class="gainMin">Min</div>
+      <input class="gain" type="range" min="0" max="1" step="0.02" value="0.3">
+      <div class="gainMax">Max</div>
+      <br style="clear:left;">
+      
+      <div class="oscLabel">Oscillator Type</div>
+      <div class="oscType">
+        <img src="images/sine.png" class="oscImage" id="sine">
+        <img src="images/square.png" class="oscImage oscOff" id="square">
+        <img src="images/sawtooth.png" class="oscImage oscOff" id="sawtooth">
+        <img src="images/triangle.png" class="oscImage oscOff" id="triangle">
       </div>
-
-		  <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-		  <script type="text/javascript" src="js/webAudio.js"></script>
-		  <script type="text/javascript" src="js/main.js"></script>
-		  <script type="text/javascript" src="js/canvasKenban.js"></script>
-		  <script type="text/javascript" src="js/WebMIDIAPI.js"></script>
-		  <script type="text/javascript" src="js/ctrlWebMIDIAPI.js"></script>
-
-				<div id="MIDIPlugin" style="position:absolute; visibility:hidden"></div>
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-31901806-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
+      
+    </div>
+    
+    <div style="margin:20px;">
+      <canvas id="canvasKenban"></canvas>
+    </div>
+    
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/webAudio.js"></script>
+		<script type="text/javascript" src="js/flatKeyboard.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+    
+		<div id="MIDIPlugin" style="position:absolute; visibility:hidden"></div>
+    
+    <script type="text/javascript">
+    
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31901806-1']);
+    _gaq.push(['_trackPageview']);
+    
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    
+    </script>
+    
 		<a href="https://github.com/ryoyakawai/WebMusicDevelopersJP" target="_new" class="header" style="position: absolute; z-index:2; top: 0; right: 0; border: 0;"><img src="images/forkme.png" alt="Fork me on GitHub"></a>
-
-		</body>
+    
+	</body>
 </html>
 
