@@ -1,6 +1,6 @@
 /**
- *  flatKeyboard.js v1.1.0 by 
- *  Copyright (c) 2014 Ryoya KAWAI @ryoyakawai . All rights reserved.
+ *  flatKeyboard.js v1.1.1 by @ryoyakawai
+ *  Copyright (c) 2014 Ryoya KAWAI. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -180,34 +180,30 @@ var FlatKeyboard = function(elem) {
         }
     }
     
-    switch(this.touchSupport){
-      case true:
-        this.canvas.addEventListener("touchstart", function(event){
+    // event listener
+    this.canvas.addEventListener("touchstart", function(event){
+        updateKey.bind(self)(event);
+    });
+    this.canvas.addEventListener("touchmove", function(event){
+        updateKey.bind(self)(event);
+    });
+    this.canvas.addEventListener("touchend", function(event){
+        updateKey.bind(self)(event);
+    });
+    this.canvas.addEventListener("mousedown", function(event){
+        self.mouseClick=true;
+        updateKey.bind(self)(event);
+    });
+    this.canvas.addEventListener("mousemove", function(event){
+        if(self.mouseClick==true) {
             updateKey.bind(self)(event);
-        });
-        this.canvas.addEventListener("touchmove", function(event){
-            updateKey.bind(self)(event);
-        });
-        this.canvas.addEventListener("touchend", function(event){
-            updateKey.bind(self)(event);
-        });
-        break;
-      case false:
-        this.canvas.addEventListener("mousedown", function(event){
-            self.mouseClick=true;
-            updateKey.bind(self)(event);
-        });
-        this.canvas.addEventListener("mousemove", function(event){
-            if(self.mouseClick==true) {
-                updateKey.bind(self)(event);
-            }
-        });
-        this.canvas.addEventListener("mouseup", function(event){
-            self.mouseClick=false;
-            updateKey.bind(self)(event);
-        });
-        break;
-    }
+        }
+    });
+    this.canvas.addEventListener("mouseup", function(event){
+        self.mouseClick=false;
+        updateKey.bind(self)(event);
+    });
+    
     function allDispNoteOff() {
         for(var i=0; i<this.drawKeys.length; i++) {
             this.drawKeys[i].on=false;
@@ -363,21 +359,21 @@ FlatKeyboard.prototype={
     getPosition: function(event) {
         var out=[];
         var rect = event.target.getBoundingClientRect();
-        switch(this.touchSupport){
-          case true:
+
+        if(event.type.match(/mouse/)!=null) {
+            out.push({
+                "x": event.clientX - rect.left,
+                "y": event.clientY - rect.top
+            });
+        } else if(event.type.match(/touch/)!=null) {
             for(var i=0; i<event.touches.length; i++) {
                 out.push({
                     "x": event.touches[i].clientX-rect.left,
                     "y": event.touches[i].clientY-rect.top
                 });
             }
-            break;
-          case false:
-            out.push({
-                "x": event.clientX - rect.left,
-                "y": event.clientY - rect.top
-            });
-            break;
+        } else {
+            console.log("EVENT: ether mouse event nor touch event.");
         }
         return out;
     },
