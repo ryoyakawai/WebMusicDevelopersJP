@@ -1,7 +1,7 @@
 var WebAudio = function() {
 
     var audioContext = new (window.webkitAudioContext||window.AudioContext);
-    var gainNode = audioContext.createGainNode();
+    var gainNode = audioContext.createGain();
     var osc = new Array();
     var gainValue = 0.3;
     var oscType = 'sine';
@@ -9,7 +9,7 @@ var WebAudio = function() {
         'sine':0,
         'square':1,
         'sawtooth':2,
-        'triangle':3,
+        'triangle':3
     };
 
 
@@ -29,7 +29,7 @@ var WebAudio = function() {
       gainValue = value;
     },
     setOscType: function(type) {
-       oscType = oscPreset[type];
+        oscType = type;
     },
     noteOn: function(key) {
       var freq = noteDefMIDI[key];
@@ -42,12 +42,12 @@ var WebAudio = function() {
 
       osc[key].connect( gainNode );
       gainNode.connect(audioContext.destination );
-      
-      osc[key].noteOn(0);
+//      console.log(audioContext.currentTime);
+      osc[key].start(0);
     },
 
     noteOff: function(key) {
-      osc[key].noteOff(0);
+      osc[key].stop(0);
     }
   };  
 };
