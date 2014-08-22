@@ -41,6 +41,7 @@ function scb(access) {
         var port=document.getElementById("midiOutSel").value;
         // #7 選択したデバイスをoutputポートに指定
 
+        // voiceChange(0); /* Web MIDI API Wrapper を使っていない場合のみ有効(「//」を削除)にしてください */
         fKey.setConnected();
     });
 

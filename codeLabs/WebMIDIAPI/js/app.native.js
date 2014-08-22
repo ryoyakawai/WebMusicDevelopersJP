@@ -39,6 +39,7 @@ function scb(access) {
     document.querySelector("#midiOutSelB").addEventListener("click", function(){
         var port=document.querySelector("#midiOutSel").value;
         midiout=outputs[port];
+        voiceChange(0);
         fKey.setConnected();
     });
 
@@ -66,7 +67,7 @@ function ecb(e){
 
 function voiceChange(voiceNo) {
     if(midiout!==null) {
-        midiout.send([ 0xc0, voiceNo, 0x00 ]);
+        midiout.send([ 0xc0, voiceNo]);
     }
     var dVoiceNo=parseInt(voiceNo)+1;
     document.querySelector("#voiceName").innerHTML=dVoiceNo + ". "+ voiceList.getGMVoiceName("instruments", voiceNo);
