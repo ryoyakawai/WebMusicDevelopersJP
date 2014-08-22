@@ -32,7 +32,7 @@
  - **[js/](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebMIDIAPI/js)**
    - *WebMIDIAPI.js*：(Web MIDI APIのPolyfill)[https://github.com/cwilso/WebMIDIAPIShim]
    - *WebMIDIAPIWrapper.js*：(Web MIDI API Wrapper)[https://github.com/ryoyakawai/WebMIDIAPIWrapper]
-   - *app.js*：**虫食いにしたファイル。これに手を加えてアプリケーションを完成させてください。**
+   - *[app.js](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebMIDIAPI/js/app.js)*：**虫食いにしたファイル。これに手を加えてアプリケーションを完成させてください。**
    - *app.native.js*：Web MIDI API のみを使って *app.js* を完成させたファイルです。
    - *app.wmaw.js*：Web MIDI API Wrapper を使って *app.js* を完成させたファイルです。
    - *flatKeyboard.js*：完成画面に埋め込んでいるキーボードのスクリプト
