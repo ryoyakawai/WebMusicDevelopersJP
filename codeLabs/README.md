@@ -7,15 +7,15 @@
 この教材は、[@g200kg](https://twitter.com/g200kg)さんのWebサイト[g200kg Music & Software](http://www.g200kg.com/)の[Web Audio API解説](http://www.g200kg.com/jp/docs/webaudio/)に掲載されているコードの利用許可を @g200kgさん からいただき重要な箇所を虫食いにしたものを教材としています。  
 ファイルの命名則は以下のようになっています。
 
- - **[数字1].html**
+ - **[数字1].html**  
  [数字1]はチャプタ番号を示しています。
  例えば **「12.アナライザーの使い方」** の教材は **[12.html](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebAudioAPI/12.html)** という具合です。
 
- - **[数字1]-[数字2].html**
+ - **[数字1]-[数字2].html**  
  [数字1]はチャプタ番号を示し、[数字2]はそのチャプタ内で説明されているサンプルコードの何番目かを示しています。
  例えば **「13.アナライザーの使い方」** の *ピンポンディレイへの応用* ですと、このチャプタの中で2つ目サンプルですので教材は **[13-02.html](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebAudioAPI/13-02.html)** という具体です。
 
- - **comp.[数字1].html、またはcomp.[数字1]-[数字2].html**
+ - **comp.[数字1].html、またはcomp.[数字1]-[数字2].html**  
  ファイル名の頭に付いている *comp* は **complete** の略です。虫食い箇所に正しい文字を入れて完成させたファイルです。
  例えば、**「12.アナライザーの使い方」** の教材 **[12.html](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebAudioAPI/12.html)** の完成ファイルは **[comp.12.html](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebAudioAPI/comp.12.html)** という具合です。  
 
