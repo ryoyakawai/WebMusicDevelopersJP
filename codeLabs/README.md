@@ -30,15 +30,15 @@
  - **assets/** ：[Bootstrap](http://getbootstrap.com/)の本体のディレクトリ
  - **images/**：画像ディレクトリ
  - **[js/](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebMIDIAPI/js)**
-   - *WebMIDIAPI.js*：(Web MIDI APIのPolyfill)[https://github.com/cwilso/WebMIDIAPIShim]
-   - *WebMIDIAPIWrapper.js*：(Web MIDI API Wrapper)[https://github.com/ryoyakawai/WebMIDIAPIWrapper]
+   - *WebMIDIAPI.js*：[Web MIDI APIのPolyfill](https://github.com/cwilso/WebMIDIAPIShim)
+   - *WebMIDIAPIWrapper.js*：[Web MIDI API Wrapper](https://github.com/ryoyakawai/WebMIDIAPIWrapper)
    - *[app.js](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebMIDIAPI/js/app.js)*：**虫食いにしたファイル。これに手を加えてアプリケーションを完成させてください。**
    - *app.native.js*：Web MIDI API のみを使って *app.js* を完成させたファイルです。
    - *app.wmaw.js*：Web MIDI API Wrapper を使って *app.js* を完成させたファイルです。
    - *flatKeyboard.js*：完成画面に埋め込んでいるキーボードのスクリプト
    - *voiceList.js*：GM音源をリスト化したスクリプト
 
-作業を開始する前に (Web MIDI API Wrapper)[https://github.com/ryoyakawai/WebMIDIAPIWrapper] を利用するか・しないかを選択してから開始してください。途中でどう書き進めたらよいか分からなくなった場合、Web MIDI API Wrapperを利用している場合は **[app.wmaw.js](https://github.com/ryoyakawai/WebMusicDevelopersJP/blob/master/codeLabs/WebMIDIAPI/js/app.wmaw.js)** を利用していない場合は **[app.native.js](https://github.com/ryoyakawai/WebMusicDevelopersJP/blob/master/codeLabs/WebMIDIAPI/js/app.native.js)** を参照して進めてください。
+作業を開始する前に [Web MIDI API Wrapper](https://github.com/ryoyakawai/WebMIDIAPIWrapper) を利用するか・しないかを選択してから開始してください。途中でどう書き進めたらよいか分からなくなった場合、Web MIDI API Wrapperを利用している場合は **[app.wmaw.js](https://github.com/ryoyakawai/WebMusicDevelopersJP/blob/master/codeLabs/WebMIDIAPI/js/app.wmaw.js)** を利用していない場合は **[app.native.js](https://github.com/ryoyakawai/WebMusicDevelopersJP/blob/master/codeLabs/WebMIDIAPI/js/app.native.js)** を参照して進めてください。
 
 
 
