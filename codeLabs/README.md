@@ -13,7 +13,7 @@
 
  - **[数字1]-[数字2].html**  
  [数字1]はチャプタ番号を示し、[数字2]はそのチャプタ内で説明されているサンプルコードの何番目かを示しています。
- 例えば **「13.アナライザーの使い方」** の *ピンポンディレイへの応用* ですと、このチャプタの中で2つ目サンプルですので教材は **[13-02.html](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebAudioAPI/13-02.html)** という具体です。
+ 例えば **「13.アナライザーの使い方」** の *ピンポンディレイへの応用* ですと、このチャプタの中で2つ目サンプルですので教材は **[13-02.html](https://github.com/ryoyakawai/WebMusicDevelopersJP/tree/master/codeLabs/WebAudioAPI/13-02.html)** という具合です。
 
  - **comp.[数字1].html、またはcomp.[数字1]-[数字2].html**  
  ファイル名の頭に付いている *comp* は **complete** の略です。虫食い箇所に正しい文字を入れて完成させたファイルです。
