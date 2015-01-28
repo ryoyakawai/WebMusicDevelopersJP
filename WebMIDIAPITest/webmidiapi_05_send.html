@@ -12,6 +12,7 @@
 
     <style type="text/css">
     /* ADD STYLE BLOCK HERE (PREFERRABLE TO INLINE STYLES) */
+    body { font-family:arial;}
     </style>
   </head>
   <body>
@@ -41,7 +42,7 @@
                 document.getElementById("warning").innerHTML= "This browser seems the implementation of the API, Web MIDI API, is followed old spec.";
                 outputs=MIDI.outputs();
             } else {
-                var outputIterator=MIDI.inputs.values();
+                var outputIterator=MIDI.outputs.values();
                 for(var o=outputIterator.next(); !o.done; o=outputIterator.next()) {
                     outputs.push(o.value);
                 }
@@ -69,7 +70,6 @@
                 //disableButton()
 
                 var o = outputs[selIdx];
-                console.log(o);
                 document.getElementById("outputdevice").innerHTML=outputs[selIdx]["name"]+" ("+outputs[selIdx]["id"]+")";
                 assert_true(outputs instanceof Object);
 
@@ -91,7 +91,6 @@
                         disableButton();
                         test_outputs.done();
                     }}, 70); //default:70
-                    console.log(o);
                 });                
             });
 
@@ -101,7 +100,7 @@
                 var e=document.createEvent('MouseEvent');
                 var b=document.getElementById("start");
                 e.initEvent(type, true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-                b.dispatchEvent(e);
+                //b.dispatchEvent(e);
             }
         
 

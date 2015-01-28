@@ -13,6 +13,7 @@
 
     <style type="text/css">
     /* ADD STYLE BLOCK HERE (PREFERRABLE TO INLINE STYLES) */
+    body { font-family:arial;}
     </style>
   </head>
   <body>
@@ -38,7 +39,7 @@
                 document.getElementById("warning").innerHTML= "This browser seems the implementation of the API, Web MIDI API, is followed old spec.";
                 outputs=MIDI.outputs();
             } else {
-                var outputIterator=MIDI.inputs.values();
+                var outputIterator=MIDI.outputs.values();
                 for(var o=outputIterator.next(); !o.done; o=outputIterator.next()) {
                     outputs.push(o.value);
                 }
